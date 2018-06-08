@@ -130,4 +130,16 @@ struct StudyTasks {
         
         return ORKOrderedTask(identifier: "SurveyTask", steps: steps)
     }()
+    
+    static let visualAcuityTask: ORKOrderedTask = {
+        let intendedUseDescription = "Tests visual acuity"
+        
+        return ORKOrderedTask.visualAcuityTask(withIdentifier: "VisualAcuityTask", intendedUseDescription: intendedUseDescription, options: ORKPredefinedTaskOption())
+    }()
+    
+    static let contrastAcuityTask: ORKOrderedTask = {
+        let intendedUseDescription = "Tests contrast acuity"
+        
+        return ORKOrderedTask.contrastAcuityTask(withIdentifier: "ContrastAcuityTask", intendedUseDescription: intendedUseDescription, options: ORKPredefinedTaskOption())
+    }()
 }

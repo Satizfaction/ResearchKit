@@ -43,6 +43,7 @@
 #import "ORKSpeechRecognitionStepViewController.h"
 #import "ORKStroopStepViewController.h"
 #import "ORKWalkingTaskStepViewController.h"
+#import "ORKEyesightTestStepViewController.h"
 
 #import "ORKAccelerometerRecorder.h"
 #import "ORKActiveStep_Internal.h"
@@ -81,6 +82,7 @@
 #import "ORKSpeechInNoiseStep.h"
 #import "ORKdBHLToneAudiometryStep.h"
 #import "ORKdBHLToneAudiometryOnboardingStep.h"
+#import "ORKEyesightTestStep.h"
 #import "ORKSkin.h"
 
 #import "ORKHelpers_Internal.h"
@@ -2588,6 +2590,208 @@ NSString *const ORKTrailmakingStepIdentifier = @"trailmaking";
         ORKStepArrayAddStep(steps, step);
     }
 
+    
+    ORKOrderedTask *task = [[ORKOrderedTask alloc] initWithIdentifier:identifier steps:steps];
+    
+    return task;
+}
+
+
+#pragma mark - visualAcuityTask
+
+NSString *const ORKEyesightTestVisualAcuityRightEyeStepIdentifier = @"eyesighttest.visualacuity.right";
+NSString *const ORKEyesightTestVisualAcuityLeftEyeStepIdentifier = @"eyesighttest.visualacuity.left";
+
++ (ORKOrderedTask *)visualAcuityTaskWithIdentifier:(NSString *)identifier
+                            intendedUseDescription:(nullable NSString *)intendedUseDescription
+                                           options:(ORKPredefinedTaskOption)options {
+    NSString *title = ORKLocalizedString(@"EYESIGHT_TEST_VISUAL_ACUITY_TASK_TITLE", nil);
+    
+    NSMutableArray *steps = [NSMutableArray array];
+    if (!(options & ORKPredefinedTaskOptionExcludeInstructions)) {
+        {
+            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction0StepIdentifier];
+            step.title = title;
+            step.text = intendedUseDescription;
+            step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_VISUAL_ACUITY_TASK_DETAIL_TEXT", nil);
+            step.image = [UIImage imageNamed:@"eyesightTestVisualAcuity" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+            //step.shouldTintImages = YES;
+            
+            ORKStepArrayAddStep(steps, step);
+        }
+        
+        {
+            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction1StepIdentifier];
+            step.title = title;
+            step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_PREPARE_FIRST_DETAIL_TEXT", nil);
+            step.image = [UIImage imageNamed:@"eyesightTestGlasses" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+            //step.shouldTintImages = YES;
+            
+            ORKStepArrayAddStep(steps, step);
+        }
+        
+        {
+            ORKVideoInstructionStep *step = [[ORKVideoInstructionStep alloc] initWithIdentifier:ORKInstruction2StepIdentifier];
+            step.title = title;
+            step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_PREPARE_SECOND_DETAIL_TEXT", nil);
+            step.videoURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"eyesighttest_visualacuity_instruction" withExtension:@"mp4"];
+            
+            ORKStepArrayAddStep(steps, step);
+        }
+    }
+    
+    {
+        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction3StepIdentifier];
+        step.title = title;
+        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_POSITION_DETAIL_TEXT", nil);
+        step.image = [UIImage imageNamed:@"eyesightTestDistance" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        //step.shouldTintImages = YES;
+        
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    {
+        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction4StepIdentifier];
+        step.title = title;
+        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_RIGHT_EYE_DETAIL_TEXT", nil);
+        step.image = [UIImage imageNamed:@"eyesightTestEyesLeftClosed" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        //step.shouldTintImages = YES;
+        
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    {
+        ORKEyesightTestStep *step = [[ORKEyesightTestStep alloc] initWithIdentifier:ORKEyesightTestVisualAcuityRightEyeStepIdentifier];
+        step.title = title;
+        step.mode = ORKEyesightTestModeVisualAcuity;
+        step.eye = ORKEyesightTestEyeRight;
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    {
+        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction5StepIdentifier];
+        step.title = title;
+        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_LEFT_EYE_DETAIL_TEXT", nil);
+        step.image = [UIImage imageNamed:@"eyesightTestEyesRightClosed" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        //step.shouldTintImages = YES;
+        
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    {
+        ORKEyesightTestStep *step = [[ORKEyesightTestStep alloc] initWithIdentifier:ORKEyesightTestVisualAcuityLeftEyeStepIdentifier];
+        step.title = title;
+        step.mode = ORKEyesightTestModeVisualAcuity;
+        step.eye = ORKEyesightTestEyeLeft;
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    if (!(options & ORKPredefinedTaskOptionExcludeConclusion)) {
+        ORKInstructionStep *step = [self makeCompletionStep];
+        
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    ORKOrderedTask *task = [[ORKOrderedTask alloc] initWithIdentifier:identifier steps:steps];
+    
+    return task;
+}
+
+
+#pragma mark - contrastAcuityTask
+
+NSString *const ORKEyesightTestContrastAcuityRightEyeStepIdentifier = @"eyesighttest.contrastacuity.right";
+NSString *const ORKEyesightTestContrastAcuityLeftEyeStepIdentifier = @"eyesighttest.contrastacuity.left";
+
++ (ORKOrderedTask *)contrastAcuityTaskWithIdentifier:(NSString *)identifier
+                                    intendedUseDescription:(nullable NSString *)intendedUseDescription
+                                                   options:(ORKPredefinedTaskOption)options {
+    NSString *title = ORKLocalizedString(@"EYESIGHT_TEST_CONTRAST_ACUITY_TASK_TITLE", nil);
+    
+    NSMutableArray *steps = [NSMutableArray array];
+    if (!(options & ORKPredefinedTaskOptionExcludeInstructions)) {
+        {
+            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction0StepIdentifier];
+            step.title = title;
+            step.text = intendedUseDescription;
+            step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_CONTRAST_ACUITY_TASK_DETAIL_TEXT", nil);
+            step.image = [UIImage imageNamed:@"eyesightTestContrastAcuity" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+            //step.shouldTintImages = YES;
+            
+            ORKStepArrayAddStep(steps, step);
+        }
+        
+        {
+            ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction1StepIdentifier];
+            step.title = title;
+            step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_PREPARE_FIRST_DETAIL_TEXT", nil);
+            step.image = [UIImage imageNamed:@"eyesightTestGlasses" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+            //step.shouldTintImages = YES;
+            
+            ORKStepArrayAddStep(steps, step);
+        }
+        
+        {
+            ORKVideoInstructionStep *step = [[ORKVideoInstructionStep alloc] initWithIdentifier:ORKInstruction2StepIdentifier];
+            step.title = title;
+            step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_PREPARE_SECOND_DETAIL_TEXT", nil);
+            step.videoURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"eyesighttest_contrastacuity_instruction" withExtension:@"mp4"];
+            
+            ORKStepArrayAddStep(steps, step);
+        }
+    }
+    
+    {
+        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction3StepIdentifier];
+        step.title = title;
+        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_POSITION_DETAIL_TEXT", nil);
+        step.image = [UIImage imageNamed:@"eyesightTestDistance" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        //step.shouldTintImages = YES;
+        
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    {
+        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction4StepIdentifier];
+        step.title = title;
+        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_RIGHT_EYE_DETAIL_TEXT", nil);
+        step.image = [UIImage imageNamed:@"eyesightTestEyesLeftClosed" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        //step.shouldTintImages = YES;
+        
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    {
+        ORKEyesightTestStep *step = [[ORKEyesightTestStep alloc] initWithIdentifier:ORKEyesightTestContrastAcuityRightEyeStepIdentifier];
+        step.title = title;
+        step.mode = ORKEyesightTestModeContrastAcuity;
+        step.eye = ORKEyesightTestEyeRight;
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    {
+        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction5StepIdentifier];
+        step.title = title;
+        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_LEFT_EYE_DETAIL_TEXT", nil);
+        step.image = [UIImage imageNamed:@"eyesightTestEyesRightClosed" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
+        //step.shouldTintImages = YES;
+        
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    {
+        ORKEyesightTestStep *step = [[ORKEyesightTestStep alloc] initWithIdentifier:ORKEyesightTestContrastAcuityLeftEyeStepIdentifier];
+        step.title = title;
+        step.mode = ORKEyesightTestModeContrastAcuity;
+        step.eye = ORKEyesightTestEyeLeft;
+        ORKStepArrayAddStep(steps, step);
+    }
+    
+    if (!(options & ORKPredefinedTaskOptionExcludeConclusion)) {
+        ORKInstructionStep *step = [self makeCompletionStep];
+        
+        ORKStepArrayAddStep(steps, step);
+    }
     
     ORKOrderedTask *task = [[ORKOrderedTask alloc] initWithIdentifier:identifier steps:steps];
     

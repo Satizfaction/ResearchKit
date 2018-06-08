@@ -660,4 +660,45 @@ ORK_EXTERN ORKSpeechRecognizerLocale const ORKSpeechRecognizerLocaleChineseHK;
 ORK_EXTERN ORKSpeechRecognizerLocale const ORKSpeechRecognizerLocaleChineseTW;
 
 
+/**
+  Eyesight Test Mode
+ */
+typedef NS_ENUM(NSInteger, ORKEyesightTestMode) {
+    /**
+     Not Specified
+     */
+    ORKEyesightTestModeNotSpecified = 0,
+    
+    /**
+     Test Vision Acuity
+     */
+    ORKEyesightTestModeVisualAcuity,
+    
+    /**
+     Test Contrast Acuity
+     */
+    ORKEyesightTestModeContrastAcuity
+} ORK_ENUM_AVAILABLE;
+
+
+/**
+ Eyesight Test Eye
+ */
+typedef NS_ENUM(NSInteger, ORKEyesightTestEye) {
+    /**
+     Not Specified
+     */
+    ORKEyesightTestEyeNotSpecified = 0,
+    
+    /**
+     Test Right Eye
+     */
+    ORKEyesightTestEyeRight,
+    
+    /**
+     Test Left Eye
+     */
+    ORKEyesightTestEyeLeft
+} ORK_ENUM_AVAILABLE;
+
 NS_ASSUME_NONNULL_END

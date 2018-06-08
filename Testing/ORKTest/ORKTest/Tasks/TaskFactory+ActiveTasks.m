@@ -323,4 +323,20 @@
     return task;
 }
 
+- (id<ORKTask>)visualAcuityTaskWithIdentifier:(NSString *)identifier {
+    ORKOrderedTask *task = [ORKOrderedTask visualAcuityTaskWithIdentifier:identifier
+                                                   intendedUseDescription:nil
+                                                                  options:ORKPredefinedTaskOptionNone];
+    task.hidesLearnMoreButtonOnInstructionStep = YES;
+    return task;
+}
+
+- (id<ORKTask>)contrastAcuityTaskWithIdentifier:(NSString *)identifier {
+    ORKOrderedTask *task = [ORKOrderedTask contrastAcuityTaskWithIdentifier:identifier
+                                                   intendedUseDescription:nil
+                                                                  options:ORKPredefinedTaskOptionNone];
+    task.hidesLearnMoreButtonOnInstructionStep = YES;
+    return task;
+}
+
 @end

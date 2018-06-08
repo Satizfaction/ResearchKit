@@ -681,6 +681,48 @@ NS_ASSUME_NONNULL_BEGIN
                                         trailType:(ORKTrailMakingTypeIdentifier)trailType
                                           options:(ORKPredefinedTaskOption)options;
 
+/**
+ Returns a predefined task that measures visual attention and task switching.
+ 
+ TODO: describe.
+ 
+ `ORKVisualAcuityTestModeVision`    TODO: describe
+ `ORKVisualAcuityTestModeContrast`  TODO: describe
+ 
+ @param identifier              The task identifier to use for this task, appropriate to the study.
+ @param intendedUseDescription  A localized string describing the intended use of the data
+ collected. If the value of this parameter is `nil`, the default
+ localized text is displayed.
+ @param mode                    Type of vision acuity test. Either `ORKEyesightTestModeVisualAcuity` or `ORKEyesightTestModeContrastAcuity`,
+ @param options                 Options that affect the features of the predefined task.
+ 
+ @return An active trail making test task that can be presented with an `ORKTaskViewController` object.
+ */
++ (ORKOrderedTask *)visualAcuityTaskWithIdentifier:(NSString *)identifier
+                            intendedUseDescription:(nullable NSString *)intendedUseDescription
+                                           options:(ORKPredefinedTaskOption)options;
+
+/**
+ Returns a predefined task that measures visual attention and task switching.
+ 
+ TODO: describe.
+ 
+ `ORKVisualAcuityTestModeVision`    TODO: describe
+ `ORKVisualAcuityTestModeContrast`  TODO: describe
+ 
+ @param identifier              The task identifier to use for this task, appropriate to the study.
+ @param intendedUseDescription  A localized string describing the intended use of the data
+ collected. If the value of this parameter is `nil`, the default
+ localized text is displayed.
+ @param mode                    Type of vision acuity test. Either `ORKEyesightTestModeVisualAcuity` or `ORKEyesightTestModeContrastAcuity`,
+ @param options                 Options that affect the features of the predefined task.
+ 
+ @return An active trail making test task that can be presented with an `ORKTaskViewController` object.
+ */
++ (ORKOrderedTask *)contrastAcuityTaskWithIdentifier:(NSString *)identifier
+                            intendedUseDescription:(nullable NSString *)intendedUseDescription
+                                           options:(ORKPredefinedTaskOption)options;
+
 @end
 
 NS_ASSUME_NONNULL_END

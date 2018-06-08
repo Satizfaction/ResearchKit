@@ -111,6 +111,8 @@ enum TaskListRow: Int, CustomStringConvertible {
     case trailMaking
     case videoInstruction
     case webView
+    case visualAcuity
+    case contrastAcuity
     
     class TaskListRowSection {
         var title: String
@@ -184,7 +186,9 @@ enum TaskListRow: Int, CustomStringConvertible {
                     .walkBackAndForth,
                     .kneeRangeOfMotion,
                     .shoulderRangeOfMotion,
-                    .trailMaking
+                    .trailMaking,
+                    .visualAcuity,
+                    .contrastAcuity
                 ]),
             TaskListRowSection(title: "Miscellaneous", rows:
                 [
@@ -349,6 +353,13 @@ enum TaskListRow: Int, CustomStringConvertible {
             
         case .webView:
             return NSLocalizedString("Web View", comment: "")
+            
+        case .visualAcuity:
+            return NSLocalizedString("Vision Acuity Test", comment: "")
+            
+        case .contrastAcuity:
+            return NSLocalizedString("Contrast Acuity Test", comment: "")
+            
         }
     }
     
@@ -697,6 +708,12 @@ enum TaskListRow: Int, CustomStringConvertible {
             
         case .webView:
             return webView
+            
+        case .visualAcuity:
+            return visualAcuityTask
+            
+        case .contrastAcuity:
+            return contrastAcuityTask
         }
     }
 
@@ -1600,6 +1617,18 @@ enum TaskListRow: Int, CustomStringConvertible {
         let webViewStep = ORKWebViewStep.init(identifier: String(describing: Identifier.webViewStep), html: exampleHtml)
         webViewStep.title = NSLocalizedString("Web View", comment: "")
         return ORKOrderedTask(identifier: String(describing: Identifier.webViewTask), steps: [webViewStep])
+    }
+    
+    // This task presents visual acuity task
+    private var visualAcuityTask: ORKOrderedTask {
+        let intendedUseDescription = "Tests visual acuity"
+        return ORKOrderedTask.visualAcuityTask(withIdentifier: "VisualAcuityTask", intendedUseDescription: intendedUseDescription, options: ORKPredefinedTaskOption())
+    }
+    
+    // This task presents contrast acuity task
+    private var contrastAcuityTask: ORKOrderedTask {
+        let intendedUseDescription = "Tests contrast acuity"
+        return ORKOrderedTask.contrastAcuityTask(withIdentifier: "ContrastAcuityTask", intendedUseDescription: intendedUseDescription, options: ORKPredefinedTaskOption())
     }
     
     // MARK: Consent Document Creation Convenience

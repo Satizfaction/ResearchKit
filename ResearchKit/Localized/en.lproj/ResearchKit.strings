@@ -551,6 +551,22 @@
 "SPEECH_IN_NOISE_SPEAK_TITLE" = "Speak";
 "SPEECH_IN_NOISE_SPEAK_TEXT" = "Repeat what you heard.";
 
+/* Eyesight Test active task */
+"EYESIGHT_TEST_ACUITY_TASK_PREPARE_FIRST_DETAIL_TEXT" = "If you wear reading glasses or contact lenses, put them on now.";
+"EYESIGHT_TEST_ACUITY_TASK_PREPARE_SECOND_DETAIL_TEXT" = "Move the dial to where you see the gap in the ring. Then tap continue.";
+"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_POSITION_DETAIL_TEXT" = "Hold your phone approximately 16 inches (40 cm) in front of you. Do not move it closer during the activity. Remember this distance as you will use the same distance each time you do this exam.";
+"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_RIGHT_EYE_DETAIL_TEXT" = "Close or cover your left eye for this portion of the test.";
+"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_LEFT_EYE_DETAIL_TEXT" = "Great! Now, keeping your phone at a 16 inch (40 cm) distance and close or cover your right eye.";
+"EYESIGHT_TEST_ACUITY_TASK_SLIDER_INFO_TEXT" = "Turn the dial to where the gap in the ring was.";
+
+/* Eyesight Test Visual Acuity active task */
+"EYESIGHT_TEST_VISUAL_ACUITY_TASK_TITLE" = "Visual Acuity";
+"EYESIGHT_TEST_VISUAL_ACUITY_TASK_DETAIL_TEXT" = "We will assess your ability to see the gap in the ring at various sizes. This activity will take approximately 5 minutes to complete.";
+
+/* Eyesight Test Contrast Acuity active task */
+"EYESIGHT_TEST_CONTRAST_ACUITY_TASK_TITLE" = "Contrast Acuity";
+"EYESIGHT_TEST_CONTRAST_ACUITY_TASK_DETAIL_TEXT" = "We will assess your ability to see the gap in the ring at various contrasts. This activity will take approximately 5 minutes to complete.";
+
 /* Potentially user visible error messages. */
 "ERROR_DATALOGGER_CREATE_FILE" = "Could not create file";
 "ERROR_DATALOGGER_COULD_NOT_FREE_SPACE" = "Could not remove sufficient log files to reach threshold";
