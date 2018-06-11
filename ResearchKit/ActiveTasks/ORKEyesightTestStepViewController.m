@@ -135,6 +135,7 @@
     
     // TODO: populate result
     ORKEyesightTestResult *eyesightTestResult = [[ORKEyesightTestResult alloc] init];
+    eyesightTestResult.identifier = self.eyesightTestStep.identifier;
     eyesightTestResult.mode = [self eyesightTestStep].mode;
     eyesightTestResult.eye = [self eyesightTestStep].eye;
     parentResult.results = @[eyesightTestResult];
