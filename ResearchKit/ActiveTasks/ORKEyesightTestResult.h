@@ -32,21 +32,26 @@
 #import <ResearchKit/ORKResult.h>
 #import <ResearchKit/ORKTypes.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 /**
- TODO: add comments
+ The `ORKEyesightTestResult` class records the results of a Eyesight test.
  */
 ORK_CLASS_AVAILABLE
 @interface ORKEyesightTestResult : ORKResult
-
+    
 /**
- TODO: add comments
+ Mode of the Eyesight test
+
+ `ORKEyesightTestModeVisualAcuity`   indicates that results corresponds to visual acuity test
+ `ORKEyesightTestModeContrastAcuity` indicates that results corresponds to contrast acuity test
  */
 @property (nonatomic) ORKEyesightTestMode mode;
-    
+
+/**
+ Testd eye
+ 
+ `ORKEyesightTestEyeRight` indicates that test applied to the right eye
+ `ORKEyesightTestEyeLeft`  indicates that test applied to the left eye
+ */
 @property (nonatomic) ORKEyesightTestEye eye;
 
 @end
-
-NS_ASSUME_NONNULL_END

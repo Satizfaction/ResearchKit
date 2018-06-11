@@ -165,6 +165,9 @@ func resultTableViewProviderForResult(_ result: ORKResult?) -> UITableViewDataSo
     case is ORKWebViewStepResult:
         providerType = WebViewStepResultTableViewProvider.self
         
+    case is ORKEyesightTestResult:
+        providerType = EyesightTestResultTableViewProvider.self
+        
     default:
         fatalError("No ResultTableViewProvider defined for \(type(of: result)).")
     }
@@ -1260,5 +1263,65 @@ class WebViewStepResultTableViewProvider: ResultTableViewProvider {
         }
         
         return rows
+    }
+}
+
+
+/// Table view provider specific to an `ORKEyesightTestResult` instance.
+class EyesightTestResultTableViewProvider: ResultTableViewProvider {
+    // MARK: UITableViewDataSource
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return super.tableView(tableView, titleForHeaderInSection: 0)
+    }
+    
+    // MARK: UITableViewDelegate
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    // MARK: ResultTableViewProvider
+    
+    override func resultRowsForSection(_ section: Int) -> [ResultRow] {
+        let eyesightTestResult = result as! ORKEyesightTestResult
+        
+        let rows = super.resultRowsForSection(section)
+        
+        return rows + [
+            // Test mode
+            ResultRow(text: "mode", detail: modeDescription(for: eyesightTestResult)),
+            // Tested eye
+            ResultRow(text: "eye", detail: eyeDescription(for: eyesightTestResult)),
+            // TODO: add more details
+            ResultRow(text: "TODO", detail: "TODO"),
+            
+        ]
+    }
+    
+    private func modeDescription(for eyesightTestResult: ORKEyesightTestResult) -> String {
+        switch eyesightTestResult.mode {
+        case .contrastAcuity:
+            return "Contrast Acuity"
+        case .visualAcuity:
+            return "Visual Acuity"
+        case .notSpecified:
+            return "Not Spectified"
+        }
+    }
+    
+    private func eyeDescription(for eyesightTestResult: ORKEyesightTestResult) -> String {
+        switch eyesightTestResult.eye {
+        case .left:
+            return "Left"
+        case .right:
+            return "Right"
+        case .notSpecified:
+            return "Not Spectified"
+        }
     }
 }

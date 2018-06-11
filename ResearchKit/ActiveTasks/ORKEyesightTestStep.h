@@ -33,11 +33,31 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ The `ORKEyesightTestStep` class implements a step that's used in the predefined
+ walking task.
+ 
+ You don't usually need to instantiate a walking step directly;
+ instead, it is instantiated as part of a predefined task. See the
+ predefined active tasks defined in `ORKOrderedTask`.
+ */
 ORK_CLASS_AVAILABLE
 @interface ORKEyesightTestStep : ORKActiveStep
-
+    
+/**
+ Mode of the Eyesight test
+ 
+ `ORKEyesightTestModeVisualAcuity`   will assess an ability to see the gap in the ring at various sizes
+ `ORKEyesightTestModeContrastAcuity` will assess an ability to see the gap in the ring at various contrasts
+ */
 @property (nonatomic) ORKEyesightTestMode mode;
 
+/**
+ Eye to test
+ 
+ `ORKEyesightTestEyeRight` indicates that test applies to the right eye
+ `ORKEyesightTestEyeLeft`  indicates that test applies to the left eye
+ */
 @property (nonatomic) ORKEyesightTestEye eye;
 
 @end

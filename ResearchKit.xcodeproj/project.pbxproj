@@ -139,7 +139,7 @@
 		449881C720CADA55008E9E3D /* eyesighttest_visualacuity_instruction.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 449881C520CADA55008E9E3D /* eyesighttest_visualacuity_instruction.mp4 */; };
 		44E076B320C978B900287BB4 /* ORKEyesightTestStep.h in Headers */ = {isa = PBXBuildFile; fileRef = 44E0769720C96DEC00287BB4 /* ORKEyesightTestStep.h */; };
 		44E076B420C978B900287BB4 /* ORKEyesightTestStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E076AA20C977A300287BB4 /* ORKEyesightTestStep.m */; };
-		44E076B520C978B900287BB4 /* ORKEyesightTestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 44E0769920C96E0200287BB4 /* ORKEyesightTestResult.h */; };
+		44E076B520C978B900287BB4 /* ORKEyesightTestResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 44E0769920C96E0200287BB4 /* ORKEyesightTestResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		44E076B620C978B900287BB4 /* ORKEyesightTestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E076AB20C977A600287BB4 /* ORKEyesightTestResult.m */; };
 		44E076B720C978B900287BB4 /* ORKEyesightTestContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 44E076A520C96EA600287BB4 /* ORKEyesightTestContentView.h */; };
 		44E076B820C978B900287BB4 /* ORKEyesightTestContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 44E076AC20C977A900287BB4 /* ORKEyesightTestContentView.m */; };

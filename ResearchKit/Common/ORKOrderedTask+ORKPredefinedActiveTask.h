@@ -682,42 +682,34 @@ NS_ASSUME_NONNULL_BEGIN
                                           options:(ORKPredefinedTaskOption)options;
 
 /**
- Returns a predefined task that measures visual attention and task switching.
+ Returns a predefined task that measures visual acuity.
  
- TODO: describe.
- 
- `ORKVisualAcuityTestModeVision`    TODO: describe
- `ORKVisualAcuityTestModeContrast`  TODO: describe
+ Assess an ability to see the gap in the ring at various sizes.
  
  @param identifier              The task identifier to use for this task, appropriate to the study.
  @param intendedUseDescription  A localized string describing the intended use of the data
  collected. If the value of this parameter is `nil`, the default
  localized text is displayed.
- @param mode                    Type of vision acuity test. Either `ORKEyesightTestModeVisualAcuity` or `ORKEyesightTestModeContrastAcuity`,
  @param options                 Options that affect the features of the predefined task.
  
- @return An active trail making test task that can be presented with an `ORKTaskViewController` object.
+ @return An active visual acuity test task that can be presented with an `ORKTaskViewController` object.
  */
 + (ORKOrderedTask *)visualAcuityTaskWithIdentifier:(NSString *)identifier
                             intendedUseDescription:(nullable NSString *)intendedUseDescription
                                            options:(ORKPredefinedTaskOption)options;
 
 /**
- Returns a predefined task that measures visual attention and task switching.
+ Returns a predefined task that measures contrast acuity.
  
- TODO: describe.
- 
- `ORKVisualAcuityTestModeVision`    TODO: describe
- `ORKVisualAcuityTestModeContrast`  TODO: describe
+ Assess an ability to see the gap in the ring at various contrasts.
  
  @param identifier              The task identifier to use for this task, appropriate to the study.
  @param intendedUseDescription  A localized string describing the intended use of the data
  collected. If the value of this parameter is `nil`, the default
  localized text is displayed.
- @param mode                    Type of vision acuity test. Either `ORKEyesightTestModeVisualAcuity` or `ORKEyesightTestModeContrastAcuity`,
  @param options                 Options that affect the features of the predefined task.
  
- @return An active trail making test task that can be presented with an `ORKTaskViewController` object.
+ @return An active contrast acuity test task that can be presented with an `ORKTaskViewController` object.
  */
 + (ORKOrderedTask *)contrastAcuityTaskWithIdentifier:(NSString *)identifier
                             intendedUseDescription:(nullable NSString *)intendedUseDescription
