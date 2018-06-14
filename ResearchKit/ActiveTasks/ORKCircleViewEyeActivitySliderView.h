@@ -28,16 +28,22 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "ORKCustomStepView_Internal.h"
-#import "ORKCircleViewEyeActivitySliderView.h"
-#import "ORKBorderedButton.h"
+#import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
+typedef NS_ENUM(NSUInteger, EyeActivitySliderState) {
+    EyeActivitySliderStateLetter,
+    EyeActivitySliderStateActive
+};
 
-@interface ORKEyesightTestContentView : ORKActiveStepCustomView
+@class ORKStep;
 
-@property (nonatomic, strong, readonly) ORKCircleViewEyeActivitySliderView *sliderView;
-@property (nonatomic, strong, nullable) ORKBorderedButton *buttonItem;
+@interface ORKCircleViewEyeActivitySliderView : UIView
+
+@property (nonatomic) CGFloat letterSize;
+@property (nonatomic) CGFloat letterAlpha;
+@property (nonatomic) EyeActivitySliderState state;
+
+- (void)setHiddenLetterImageViewForState:(EyeActivitySliderState)state;
+- (BOOL)getResult;
+
 @end
-
-NS_ASSUME_NONNULL_END

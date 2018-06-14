@@ -28,16 +28,38 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "ORKCustomStepView_Internal.h"
-#import "ORKCircleViewEyeActivitySliderView.h"
-#import "ORKBorderedButton.h"
+@import UIKit;
+#import "ORKDefines.h"
 
-NS_ASSUME_NONNULL_BEGIN
+ORK_EXTERN NSString *const ORKCircleViewSliderStartAngleKey;
 
-@interface ORKEyesightTestContentView : ORKActiveStepCustomView
+ORK_EXTERN NSString *const ORKCircleViewSliderBarColorKey;
 
-@property (nonatomic, strong, readonly) ORKCircleViewEyeActivitySliderView *sliderView;
-@property (nonatomic, strong, nullable) ORKBorderedButton *buttonItem;
+ORK_EXTERN NSString *const ORKCircleViewSliderTrackingColorKey;
+
+ORK_EXTERN NSString *const ORKCircleViewSliderThumbColorKey;
+
+ORK_EXTERN NSString *const ORKCircleViewSliderThumbImageKey;
+
+ORK_EXTERN NSString *const ORKCircleViewSliderBarWidthKey;
+
+ORK_EXTERN NSString *const ORKCircleViewSliderThumbWidthKey;
+
+ORK_EXTERN NSString *const ORKCircleViewSliderMaxValueKey;
+
+ORK_EXTERN NSString *const ORKCircleViewSliderMinValueKey;
+
+ORK_EXTERN NSString *const ORKCircleViewSliderSliderEnabledKey;
+
+ORK_EXTERN NSString *const ORKCircleViewSliderViewInsetKey;
+
+ORK_EXTERN NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey;
+
+
+@interface ORKCircleViewSlider : UIControl
+
+@property (nonatomic) CGFloat value;
+
+- (instancetype)initWithFrame:(CGRect)frame options:(NSDictionary*)options;
+
 @end
-
-NS_ASSUME_NONNULL_END

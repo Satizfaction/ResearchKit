@@ -39,6 +39,7 @@
     [super encodeWithCoder:aCoder];
     ORK_ENCODE_ENUM(aCoder, mode);
     ORK_ENCODE_ENUM(aCoder, eye);
+    ORK_ENCODE_INTEGER(aCoder, score);
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -46,6 +47,7 @@
     if (self) {
         ORK_DECODE_ENUM(aDecoder, mode);
         ORK_DECODE_ENUM(aDecoder, eye);
+        ORK_DECODE_INTEGER(aDecoder, score);
     }
     return self;
 }
@@ -55,7 +57,7 @@
 }
 
 - (NSUInteger)hash {
-    return super.hash ^ self.mode ^ self.eye;
+    return super.hash ^ self.mode ^ self.eye ^ self.score;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -64,13 +66,15 @@
     __typeof(self) castObject = object;
     return (isParentSame
             && (self.mode == castObject.mode)
-            && (self.eye == castObject.eye));
+            && (self.eye == castObject.eye)
+            && (self.score == castObject.score));
 }
 
 - (instancetype)copyWithZone:(NSZone *)zone {
     ORKEyesightTestResult *result = [super copyWithZone:zone];
     result->_mode = _mode;
     result->_eye = _eye;
+    result->_score = _score;
     return result;
 }
 

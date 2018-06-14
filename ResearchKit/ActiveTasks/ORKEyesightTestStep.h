@@ -60,6 +60,8 @@ ORK_CLASS_AVAILABLE
  */
 @property (nonatomic) ORKEyesightTestEye eye;
 
+@property (nonatomic) NSInteger score;
+
 @end
 
 NS_ASSUME_NONNULL_END

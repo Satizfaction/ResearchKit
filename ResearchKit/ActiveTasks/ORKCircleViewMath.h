@@ -28,16 +28,30 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "ORKCustomStepView_Internal.h"
-#import "ORKCircleViewEyeActivitySliderView.h"
-#import "ORKBorderedButton.h"
+@import UIKit;
 
-NS_ASSUME_NONNULL_BEGIN
+@interface ORKCircleViewMath : NSObject
 
-@interface ORKEyesightTestContentView : ORKActiveStepCustomView
++ (CGFloat)degreesToRadiansWithAngle:(CGFloat)angle;
 
-@property (nonatomic, strong, readonly) ORKCircleViewEyeActivitySliderView *sliderView;
-@property (nonatomic, strong, nullable) ORKBorderedButton *buttonItem;
++ (CGPoint)pointFromAngle:(CGFloat)angle
+                    frame:(CGRect)frame
+                   radius:(CGFloat)radius;
+
++ (CGFloat)pointPairToBearingDegreesWithStartPoint:(CGPoint)startPoint
+                                          endPoint:(CGPoint)endPoint;
+
++ (CGFloat)adjustValueWithStartAngle:(CGFloat)startAngle
+                              degree:(CGFloat)degree
+                            maxValue:(CGFloat)maxValue
+                            minValue:(CGFloat)minValue;
+
++ (CGFloat)adjustDegreeWithStartAngle:(CGFloat)startAngle
+                               degree:(CGFloat)degree;
+
++ (CGFloat)degreeFromValueWithStartAngle:(CGFloat)startAngle
+                                   value:(CGFloat)value
+                                maxValue:(CGFloat)maxValue
+                                minValue:(CGFloat)minValue;
+
 @end
-
-NS_ASSUME_NONNULL_END

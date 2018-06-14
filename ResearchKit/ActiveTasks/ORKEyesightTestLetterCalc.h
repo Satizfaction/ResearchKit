@@ -28,16 +28,15 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "ORKCustomStepView_Internal.h"
-#import "ORKCircleViewEyeActivitySliderView.h"
-#import "ORKBorderedButton.h"
+#import <UIKit/UIKit.h>
+#import "ORKTypes.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@interface ORKEyesightTestLetterCalc : NSObject
 
-@interface ORKEyesightTestContentView : ORKActiveStepCustomView
++ (NSInteger)getStepsCountForMode:(ORKEyesightTestMode)mode;
++ (CGFloat)getSizeForStep:(NSInteger)step;
++ (CGFloat)getSizeForContrastAcuity;
++ (CGFloat)getAlphaForStep:(NSInteger)step;
++ (NSInteger)getScoreForStep:(NSInteger)step;
 
-@property (nonatomic, strong, readonly) ORKCircleViewEyeActivitySliderView *sliderView;
-@property (nonatomic, strong, nullable) ORKBorderedButton *buttonItem;
 @end
-
-NS_ASSUME_NONNULL_END

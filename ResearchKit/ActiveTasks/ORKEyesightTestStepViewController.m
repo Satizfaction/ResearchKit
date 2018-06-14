@@ -43,14 +43,20 @@
 #import "ORKEyesightTestContentView.h"
 #import "ORKEyesightTestStep.h"
 #import "ORKEyesightTestResult.h"
+#import "ORKEyesightTestLetterCalc.h"
 
-@interface ORKEyesightTestStepViewController () {
-    ORKEyesightTestContentView *_visualAcuityView;
-}
+@interface ORKEyesightTestStepViewController () <UIGestureRecognizerDelegate>
 
 @end
 
-@implementation ORKEyesightTestStepViewController
+@implementation ORKEyesightTestStepViewController {
+    ORKEyesightTestContentView *_visualAcuityView;
+    
+    NSInteger score;
+    NSInteger attempts;
+    NSInteger currentStep;
+    dispatch_block_t dispatchBlock;
+}
 
 - (instancetype)initWithStep:(ORKStep *)step {
     self = [super initWithStep:step];
@@ -74,55 +80,91 @@
     _visualAcuityView = [ORKEyesightTestContentView new];
     _visualAcuityView.translatesAutoresizingMaskIntoConstraints = NO;
     self.activeStepView.activeCustomView = _visualAcuityView;
-    self.activeStepView.stepViewFillsAvailableSpace = YES;
-
-    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] init];
-    [tapRecognizer addTarget:self action:@selector(stopTest:)];
-    [_visualAcuityView addGestureRecognizer:tapRecognizer];
+    [self.activeStepView setScrollEnabled:NO];
+    self.activeStepView.stepViewFillsAvailableSpace = NO;
     
-    // Turn the dial to where the gap in the ring was.
-    // ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_INFO_TEXT", nil)
+    NSString *title = [self eyesightTestStep].eye == ORKEyesightTestEyeRight ? ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_RIGHT_EYE", nil) : ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_LEFT_EYE", nil);
+    NSString *message = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_INFO_TEXT", nil);
+    [self.activeStepView updateTitle:title text:message];
     
-    [self setupContraints];
+    if ([self eyesightTestStep].mode == ORKEyesightTestModeContrastAcuity) {
+        _visualAcuityView.sliderView.letterSize = [ORKEyesightTestLetterCalc getSizeForContrastAcuity];
+    }
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:nil];
+    tapGesture.numberOfTapsRequired = 1;
+    tapGesture.delegate = self;
+    [_visualAcuityView.sliderView addGestureRecognizer:tapGesture];
+    
+    currentStep = 0;
+    attempts = 1;
+    score = 0;
+    
+    _visualAcuityView.buttonItem = [ORKBorderedButton new];
+    [_visualAcuityView.buttonItem setTitle:ORKLocalizedString(@"BUTTON_NEXT", nil) forState:UIControlStateNormal];
+    [_visualAcuityView.buttonItem addTarget:self action:@selector(goNext) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self changeAcuity];
 }
 
-- (void)stopTest:(id)button {
-    [self finish];
+- (void)goNext {
+    BOOL result = [self calculateResult];
+    if (!result && attempts == 2) {
+        [self goForward];
+        return;
+    }
+   
+    if (result) {
+        currentStep += 1;
+        attempts = 1;
+    } else {
+        attempts += 1;
+    }
+    
+    [self changeAcuity];
 }
 
-- (void)setupContraints {
-    NSArray *constraints = @[
-                             
-                             [NSLayoutConstraint constraintWithItem:_visualAcuityView
-                                                          attribute:NSLayoutAttributeWidth
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:nil
-                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                         multiplier:1.0
-                                                           constant:self.view.bounds.size.width],
-                             [NSLayoutConstraint constraintWithItem:_visualAcuityView
-                                                          attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:nil
-                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                         multiplier:1.0
-                                                           constant:self.view.bounds.size.height],
-                             [NSLayoutConstraint constraintWithItem:_visualAcuityView
-                                                          attribute:NSLayoutAttributeCenterX
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeCenterX
-                                                         multiplier:1.0
-                                                           constant:0.0],
-                             [NSLayoutConstraint constraintWithItem:_visualAcuityView
-                                                          attribute:NSLayoutAttributeCenterY
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeCenterY
-                                                         multiplier:1.0
-                                                           constant:0.0]
-                             ];
-    [NSLayoutConstraint activateConstraints:constraints];
+- (BOOL)calculateResult {
+    BOOL correctResult = [_visualAcuityView.sliderView getResult];
+    if (correctResult) {
+        [self eyesightTestStep].score = [ORKEyesightTestLetterCalc getScoreForStep:currentStep];
+    }
+    return correctResult;
+}
+
+- (void)changeAcuity {
+    ORKEyesightTestMode mode = [self eyesightTestStep].mode;
+    if (currentStep >= [ORKEyesightTestLetterCalc getStepsCountForMode:mode]) {
+        [self goForward];
+        return;
+    }
+    
+    switch (mode) {
+        case ORKEyesightTestModeVisualAcuity:
+            _visualAcuityView.sliderView.letterSize = [ORKEyesightTestLetterCalc getSizeForStep:currentStep];
+            break;
+        case ORKEyesightTestModeContrastAcuity:
+            _visualAcuityView.sliderView.letterAlpha = [ORKEyesightTestLetterCalc getAlphaForStep:currentStep];
+            break;
+        default:
+            break;
+    }
+    [self changeViewState];
+}
+
+- (void)changeViewState {
+    _visualAcuityView.sliderView.state = EyeActivitySliderStateLetter;
+    [_visualAcuityView.sliderView setHiddenLetterImageViewForState:EyeActivitySliderStateLetter];
+    
+    if (dispatchBlock != nil) {
+        dispatch_block_cancel(dispatchBlock);
+    }
+    
+    dispatchBlock = dispatch_block_create(0, ^{
+        _visualAcuityView.sliderView.state = EyeActivitySliderStateActive;
+        [_visualAcuityView.sliderView setHiddenLetterImageViewForState:EyeActivitySliderStateActive];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), dispatchBlock);
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -138,9 +180,17 @@
     eyesightTestResult.identifier = self.eyesightTestStep.identifier;
     eyesightTestResult.mode = [self eyesightTestStep].mode;
     eyesightTestResult.eye = [self eyesightTestStep].eye;
+    eyesightTestResult.score = [self eyesightTestStep].score;
     parentResult.results = @[eyesightTestResult];
     
     return parentResult;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if (_visualAcuityView.sliderView.state == EyeActivitySliderStateLetter) {
+        _visualAcuityView.sliderView.state = EyeActivitySliderStateActive;
+    }
+    return true;
 }
 
 @end

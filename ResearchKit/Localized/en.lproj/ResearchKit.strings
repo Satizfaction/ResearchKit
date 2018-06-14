@@ -558,6 +558,8 @@
 "EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_RIGHT_EYE_DETAIL_TEXT" = "Close or cover your left eye for this portion of the test.";
 "EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_LEFT_EYE_DETAIL_TEXT" = "Great! Now, keeping your phone at a 16 inch (40 cm) distance and close or cover your right eye.";
 "EYESIGHT_TEST_ACUITY_TASK_SLIDER_INFO_TEXT" = "Turn the dial to where the gap in the ring was.";
+"EYESIGHT_TEST_ACUITY_TASK_SLIDER_RIGHT_EYE" = "Right Eye";
+"EYESIGHT_TEST_ACUITY_TASK_SLIDER_LEFT_EYE" = "Left Eye";
 
 /* Eyesight Test Visual Acuity active task */
 "EYESIGHT_TEST_VISUAL_ACUITY_TASK_TITLE" = "Visual Acuity";

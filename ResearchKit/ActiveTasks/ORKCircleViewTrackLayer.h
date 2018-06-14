@@ -28,16 +28,19 @@
  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "ORKCustomStepView_Internal.h"
-#import "ORKCircleViewEyeActivitySliderView.h"
-#import "ORKBorderedButton.h"
+#import <UIKit/UIKit.h>
+#import <QuartzCore/QuartzCore.h>
 
-NS_ASSUME_NONNULL_BEGIN
+@interface ORKCircleViewTrackLayerSetting: NSObject
 
-@interface ORKEyesightTestContentView : ORKActiveStepCustomView
+- (instancetype)initWithStartAngle:(CGFloat)startAngle barWidth:(CGFloat)barWidth barColor:(UIColor *)barColor trackingColor:(UIColor *)trackingColor;
 
-@property (nonatomic, strong, readonly) ORKCircleViewEyeActivitySliderView *sliderView;
-@property (nonatomic, strong, nullable) ORKBorderedButton *buttonItem;
 @end
 
-NS_ASSUME_NONNULL_END
+@interface ORKCircleViewTrackLayer : CAShapeLayer
+
+@property (nonatomic) CGFloat degree;
+
+- (instancetype)initWithBounds:(CGRect)bounds setting:(ORKCircleViewTrackLayerSetting *)setting;
+
+@end
