@@ -83,6 +83,8 @@
 #import "ORKdBHLToneAudiometryStep.h"
 #import "ORKdBHLToneAudiometryOnboardingStep.h"
 #import "ORKEyesightTestStep.h"
+#import "ORKMultiInstructionStep.h"
+#import "ORKMultiInstructionStepItem.h"
 #import "ORKSkin.h"
 
 #import "ORKHelpers_Internal.h"
@@ -2641,21 +2643,23 @@ NSString *const ORKEyesightTestVisualAcuityLeftEyeStepIdentifier = @"eyesighttes
     }
     
     {
-        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction3StepIdentifier];
+        ORKMultiInstructionStep *step = [[ORKMultiInstructionStep alloc] initWithIdentifier:ORKInstruction3StepIdentifier];
         step.title = title;
-        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_POSITION_DETAIL_TEXT", nil);
-        step.image = [UIImage imageNamed:@"eyesightTestDistance" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-        //step.shouldTintImages = YES;
         
-        ORKStepArrayAddStep(steps, step);
-    }
-    
-    {
-        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction4StepIdentifier];
-        step.title = title;
-        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_RIGHT_EYE_DETAIL_TEXT", nil);
-        step.image = [UIImage imageNamed:@"eyesightTestEyesLeftClosed" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-        //step.shouldTintImages = YES;
+        // instruction items
+        NSMutableArray *items = [[NSMutableArray alloc] init];
+        
+        [items addObject:[[ORKMultiInstructionStepItemText alloc] initWithText:ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_POSITION_DETAIL_TEXT", nil)]];
+        
+        [items addObject:[[ORKMultiInstructionStepItemImage alloc] initWithImage:[UIImage imageNamed:@"eyesightTestDistance" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] shouldTintImage:NO auxiliaryImage:nil]];
+        
+        [items addObject:[[ORKMultiInstructionStepItemText alloc] initWithText:ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_RIGHT_EYE_DETAIL_TEXT", nil)]];
+        
+        [items addObject:[[ORKMultiInstructionStepItemImage alloc] initWithImage:[UIImage imageNamed:@"eyesightTestEyesLeftClosed" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] shouldTintImage:NO auxiliaryImage:nil]];
+        
+        step.items = [items copy];
+        
+        step.metrics = @{@"topSpacing":@8};
         
         ORKStepArrayAddStep(steps, step);
     }
@@ -2742,21 +2746,21 @@ NSString *const ORKEyesightTestContrastAcuityLeftEyeStepIdentifier = @"eyesightt
     }
     
     {
-        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction3StepIdentifier];
+        ORKMultiInstructionStep *step = [[ORKMultiInstructionStep alloc] initWithIdentifier:ORKInstruction3StepIdentifier];
         step.title = title;
-        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_POSITION_DETAIL_TEXT", nil);
-        step.image = [UIImage imageNamed:@"eyesightTestDistance" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-        //step.shouldTintImages = YES;
         
-        ORKStepArrayAddStep(steps, step);
-    }
-    
-    {
-        ORKInstructionStep *step = [[ORKInstructionStep alloc] initWithIdentifier:ORKInstruction4StepIdentifier];
-        step.title = title;
-        step.detailText = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_RIGHT_EYE_DETAIL_TEXT", nil);
-        step.image = [UIImage imageNamed:@"eyesightTestEyesLeftClosed" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil];
-        //step.shouldTintImages = YES;
+        // instruction items
+        NSMutableArray *items = [[NSMutableArray alloc] init];
+        
+        [items addObject:[[ORKMultiInstructionStepItemText alloc] initWithText:ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_POSITION_DETAIL_TEXT", nil)]];
+        
+        [items addObject:[[ORKMultiInstructionStepItemImage alloc] initWithImage:[UIImage imageNamed:@"eyesightTestDistance" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] shouldTintImage:NO auxiliaryImage:nil]];
+        
+        [items addObject:[[ORKMultiInstructionStepItemText alloc] initWithText:ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_EXPLAIN_RIGHT_EYE_DETAIL_TEXT", nil)]];
+        
+        [items addObject:[[ORKMultiInstructionStepItemImage alloc] initWithImage:[UIImage imageNamed:@"eyesightTestEyesLeftClosed" inBundle:[NSBundle bundleForClass:[self class]] compatibleWithTraitCollection:nil] shouldTintImage:NO auxiliaryImage:nil]];
+        
+        step.items = [items copy];
         
         ORKStepArrayAddStep(steps, step);
     }
