@@ -1297,8 +1297,8 @@ class EyesightTestResultTableViewProvider: ResultTableViewProvider {
             ResultRow(text: "mode", detail: modeDescription(for: eyesightTestResult)),
             // Tested eye
             ResultRow(text: "eye", detail: eyeDescription(for: eyesightTestResult)),
-            // TODO: add more details
-            ResultRow(text: "TODO", detail: "TODO"),
+            // Score
+            ResultRow(text: "score", detail: "\(eyesightTestResult.score)"),
             
         ]
     }
