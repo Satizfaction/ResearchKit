@@ -132,8 +132,11 @@ CGFloat labelMargin = 30.0;
     
     self.letterImageView.transform = CGAffineTransformMakeRotation([ORKCircleViewMath degreesToRadiansWithAngle:self.letterAngle]);
     
-    self.slider.frame = self.bounds;
-    
+    if (!CGRectEqualToRect(self.slider.frame, self.bounds)) {
+        self.slider.frame = self.bounds;
+        [self.slider setNeedsLayout];
+    }
+
     CGRect frame = [self contentFrame];
     frame.origin.x += labelMargin;
     frame.origin.y += labelMargin;

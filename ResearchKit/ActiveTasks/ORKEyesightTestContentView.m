@@ -36,14 +36,19 @@
 
 @implementation ORKEyesightTestContentView {
     UIView *_continueView;
+    UIView *_contentView;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        _contentView = [UIView new];
+        _contentView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addSubview:_contentView];
+        
         _sliderView = [ORKCircleViewEyeActivitySliderView new];
         _sliderView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self addSubview:_sliderView];
+        [_contentView addSubview:_sliderView];
         
         _continueView = [UIView new];
         _continueView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -102,32 +107,47 @@
 - (void)setUpConstraints {
     NSMutableArray *constraints = [NSMutableArray new];
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_sliderView, _continueView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_contentView, _sliderView, _continueView);
     
     [constraints addObjectsFromArray:
-     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_sliderView]-(>=0)-[_continueView(50)]-(20)-|"
+     [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_contentView(>=200)]-20-[_continueView(50@250)]-20-|"
                                              options:NSLayoutFormatAlignAllCenterX
                                              metrics:nil
                                                views:views]];
-    NSLayoutConstraint *sliderViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_sliderView
-                                                                                attribute:NSLayoutAttributeHeight
-                                                                                relatedBy:NSLayoutRelationEqual
-                                                                                   toItem:nil
-                                                                                attribute:NSLayoutAttributeNotAnAttribute
-                                                                               multiplier:1.0
-                                                                                 constant:ORKScreenMetricMaxDimension];
-    sliderViewHeightConstraint.priority = UILayoutPriorityDefaultLow - 1;
-    [constraints addObject:sliderViewHeightConstraint];
     
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_sliderView]-|"
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_contentView]-|"
                                                                              options:(NSLayoutFormatOptions)0
                                                                              metrics:nil
                                                                                views:views]];
     
-    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_continueView]|"
+    [constraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_continueView]-|"
                                                                              options:(NSLayoutFormatOptions)0
                                                                              metrics:nil
                                                                                views:views]];
+    
+    
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:_sliderView
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                           toItem:_contentView
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0
+                                                         constant:0.0]];
+    
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:_sliderView
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:_contentView
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.0
+                                                         constant:0.0]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:_sliderView
+                                                        attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:_contentView
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.0
+                                                         constant:0.0]];
     
     [constraints addObject:[NSLayoutConstraint constraintWithItem:_sliderView
                                                         attribute:NSLayoutAttributeHeight
@@ -137,15 +157,23 @@
                                                        multiplier:1.0
                                                          constant:0.0]];
     
-    NSLayoutConstraint *maxWidthConstraint = [NSLayoutConstraint constraintWithItem:self
-                                                                          attribute:NSLayoutAttributeWidth
-                                                                          relatedBy:NSLayoutRelationEqual
-                                                                             toItem:nil
-                                                                          attribute:NSLayoutAttributeNotAnAttribute
-                                                                         multiplier:1.0
-                                                                           constant:ORKScreenMetricMaxDimension];
-    maxWidthConstraint.priority = UILayoutPriorityRequired - 1;
-    [constraints addObject:maxWidthConstraint];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:_sliderView
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0
+                                                         constant:200.0]];
+    
+    NSLayoutConstraint *sliderHeightConstraintMax = [NSLayoutConstraint constraintWithItem:_sliderView
+                                                                                 attribute:NSLayoutAttributeHeight
+                                                                                 relatedBy:NSLayoutRelationEqual
+                                                                                    toItem:nil
+                                                                                 attribute:NSLayoutAttributeNotAnAttribute
+                                                                                multiplier:1.0
+                                                                                  constant:400.0];
+    sliderHeightConstraintMax.priority = UILayoutPriorityDefaultLow - 1;
+    [constraints addObject:sliderHeightConstraintMax];
     
     [NSLayoutConstraint activateConstraints:constraints];
 }

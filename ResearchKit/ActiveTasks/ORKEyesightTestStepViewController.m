@@ -45,8 +45,9 @@
 #import "ORKEyesightTestResult.h"
 #import "ORKEyesightTestLetterCalc.h"
 
-@interface ORKEyesightTestStepViewController () <UIGestureRecognizerDelegate>
+NSInteger countOfAttempts = 2;
 
+@interface ORKEyesightTestStepViewController () <UIGestureRecognizerDelegate>
 @end
 
 @implementation ORKEyesightTestStepViewController {
@@ -80,8 +81,7 @@
     _visualAcuityView = [ORKEyesightTestContentView new];
     _visualAcuityView.translatesAutoresizingMaskIntoConstraints = NO;
     self.activeStepView.activeCustomView = _visualAcuityView;
-    [self.activeStepView setScrollEnabled:NO];
-    self.activeStepView.stepViewFillsAvailableSpace = NO;
+    self.activeStepView.stepViewFillsAvailableSpace = YES;
     
     NSString *title = [self eyesightTestStep].eye == ORKEyesightTestEyeRight ? ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_RIGHT_EYE", nil) : ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_LEFT_EYE", nil);
     NSString *message = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_INFO_TEXT", nil);
@@ -109,12 +109,12 @@
 
 - (void)goNext {
     BOOL result = [self calculateResult];
-    if (!result && attempts == 2) {
+    if (!result && attempts == countOfAttempts) {
         [self goForward];
         return;
     }
    
-    if (result) {
+    if (result && attempts == countOfAttempts) {
         currentStep += 1;
         attempts = 1;
     } else {
