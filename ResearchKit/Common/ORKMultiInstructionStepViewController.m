@@ -49,11 +49,11 @@
     UIView *_viewsContainer;
     NSArray<NSLayoutConstraint *> *_constraints;
 }
-    
+
 - (ORKMultiInstructionStep *)instructionStep {
     return (ORKMultiInstructionStep *)self.step;
 }
-    
+
 - (void)stepDidChange {
     [super stepDidChange];
     
@@ -70,6 +70,12 @@
     
     if (_viewsContainer == nil) {
         _viewsContainer = [UIView new];
+        _viewsContainer.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        // layout margin
+        CGFloat margin = ORKStandardHorizontalMarginForView(_viewsContainer);
+        UIEdgeInsets layoutMargins = (UIEdgeInsets){.left = margin, .right = margin};
+        _viewsContainer.layoutMargins = layoutMargins;
     } else {
         for (UIView *_view in _viewsContainer.subviews) {
             [_view removeFromSuperview];
@@ -95,7 +101,6 @@
     
     _instructionViews = [instructionViews copy];
     
-    //self.stepView.customView = _viewsContainer;
     self.stepView.stepView = _viewsContainer;
     
     [self setupContainerConstraints];
@@ -115,17 +120,33 @@
         _constraints = nil;
     }
     
-    _viewsContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    
     NSMutableArray *tempConstraints = [NSMutableArray new];
     
-    NSMutableDictionary *metrics = [@{@"viewHeight":@200,
-                                    @"viewSpacing":@50,
-                                    @"topSpacing":@8,
-                                    @"bottomSpacing":@80,
-                                    @"leftSpacing":@18,
-                                    @"rightSpacing":@18
-                                    } mutableCopy];
+    // views container
+    
+    [tempConstraints addObject:[NSLayoutConstraint constraintWithItem:_viewsContainer
+                                                            attribute:NSLayoutAttributeLeft
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view.safeAreaLayoutGuide
+                                                            attribute:NSLayoutAttributeLeft
+                                                           multiplier:1.0
+                                                             constant:0.0]];
+    [tempConstraints addObject:[NSLayoutConstraint constraintWithItem:_viewsContainer
+                                                            attribute:NSLayoutAttributeRight
+                                                            relatedBy:NSLayoutRelationEqual
+                                                               toItem:self.view.safeAreaLayoutGuide
+                                                            attribute:NSLayoutAttributeRight
+                                                           multiplier:1.0
+                                                             constant:0.0]];
+    
+    // instruction views
+    
+    NSMutableDictionary *metrics = [@{@"viewHeight": @200,
+                                      @"viewSpacing": @50,
+                                      @"topSpacing": @8,
+                                      @"bottomSpacing": @80
+                                      } mutableCopy];
+    
     if (self.instructionStep.metrics != nil) {
         for (id key in self.instructionStep.metrics.allKeys) {
             metrics[key] = self.instructionStep.metrics[key];
@@ -148,42 +169,42 @@
             // constraint to top
             NSString *visualFormat = [NSString stringWithFormat:@"V:|-topSpacing-[%@]", instructionViewKey];
             [tempConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:visualFormat
-                                                                               options:0
-                                                                               metrics:metrics
-                                                                                 views:_viewsDictionary]];
+                                                                                         options:0
+                                                                                         metrics:metrics
+                                                                                           views:_viewsDictionary]];
         } else {
             // constraint to prev
             NSString *visualFormat = [NSString stringWithFormat:@"V:[%@]-viewSpacing-[%@]", prevViewKey, instructionViewKey];
             [tempConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:visualFormat
-                                                                               options:0
-                                                                               metrics:metrics
-                                                                                 views:_viewsDictionary]];
+                                                                                         options:0
+                                                                                         metrics:metrics
+                                                                                           views:_viewsDictionary]];
         }
         
         {
             // constraint to left and right
-            NSString *visualFormat = [NSString stringWithFormat:@"H:|-leftSpacing-[%@]-rightSpacing-|", instructionViewKey];
+            NSString *visualFormat = [NSString stringWithFormat:@"H:|-[%@]-|", instructionViewKey];
             [tempConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:visualFormat
-                                                                               options:0
-                                                                               metrics:metrics
-                                                                                 views:_viewsDictionary]];
+                                                                                         options:0
+                                                                                         metrics:metrics
+                                                                                           views:_viewsDictionary]];
         }
         {
             // height
-            NSString *visualFormat = [NSString stringWithFormat:@"V:[%@(viewHeight@250)]", instructionViewKey];
+            NSString *visualFormat = [NSString stringWithFormat:@"V:[%@(viewHeight@249)]", instructionViewKey];
             [tempConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:visualFormat
-                                                                               options:0
-                                                                               metrics:metrics
-                                                                                 views:_viewsDictionary]];
+                                                                                         options:0
+                                                                                         metrics:metrics
+                                                                                           views:_viewsDictionary]];
         }
         if (i + 1 == _instructionViews.count) {
             // last view
             // constraint to bottom
             NSString *visualFormat = [NSString stringWithFormat:@"V:[%@]-bottomSpacing-|", instructionViewKey];
             [tempConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:visualFormat
-                                                                               options:0
-                                                                               metrics:metrics
-                                                                                 views:_viewsDictionary]];
+                                                                                         options:0
+                                                                                         metrics:metrics
+                                                                                           views:_viewsDictionary]];
         }
         
         prevViewKey = instructionViewKey;
@@ -212,7 +233,7 @@
         NSAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:textInstruction.value
                                                                                attributes:@{NSParagraphStyleAttributeName: style}];
         [attributedInstruction appendAttributedString:attString];
-        UILabel *labelView = [UILabel new];
+        ORKSubheadlineLabel *labelView = [ORKSubheadlineLabel new];
         labelView.attributedText = attributedInstruction;
         labelView.numberOfLines = 0;
         [labelView sizeToFit];
