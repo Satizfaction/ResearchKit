@@ -47,7 +47,6 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
 @interface ORKCircleViewSlider ()
 @property (nonatomic) CGFloat minThumbTouchAreaWidth;
 @property (nonatomic) CGFloat latestDegree;
-@property (nonatomic) CGFloat _value;
 
 @property (nonatomic) UIView *thumbView;
 @property (nonatomic) ORKCircleViewTrackLayer *trackLayer;
@@ -65,13 +64,12 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
 @property (nonatomic) CGFloat viewInset;
 @property (nonatomic) CGFloat minMaxSwitchTreshold; // from 0.0 to 1.0
 @property (nonatomic) UIImage *thumbImage;
-@property (nonatomic) CGFloat _thumbWidth;
 @property (nonatomic) CGFloat thumbWidth;
 
 @end
 
 @implementation ORKCircleViewSlider
-@synthesize setting = _setting;
+@synthesize thumbWidth = _thumbWidth;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -107,9 +105,9 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
 - (void)setValue:(CGFloat)newValue {
     CGFloat value = newValue;
     CGFloat significantChange = (self.maxValue - self.minValue) * (1.0 - self.minMaxSwitchTreshold);
-    BOOL isSignificantChangeOccured = fabs(newValue - self._value) > significantChange;
+    BOOL isSignificantChangeOccured = fabs(newValue - self.value) > significantChange;
     if (isSignificantChangeOccured) {
-        if (self._value < value) {
+        if (self.value < value) {
             newValue = self.minValue;
         } else {
             newValue = self.maxValue;
@@ -118,21 +116,16 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
         value = newValue;
     }
     
-    self._value = value;
+    _value = value;
     [self sendActionsForControlEvents:UIControlEventValueChanged];
     double degree = [ORKCircleViewMath degreeFromValueWithStartAngle:self.startAngle value:self.value maxValue:self.maxValue minValue:self.minValue];
     // fix rendering issue near max value
     // substract 1/100 of one degree from the current degree to fix a very little overflow
     // which otherwise cause to display a layer as it is on a min value
-    if (self._value == self.maxValue) {
+    if (self.value == self.maxValue) {
         degree -= degree / (360 * 100);
     }
-    
     [self layoutWithDegree:degree];
-}
-
-- (CGFloat)value {
-    return self._value;
 }
 
 - (void)setTrackLayer:(ORKCircleViewTrackLayer *)trackLayer {
@@ -162,22 +155,17 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
 }
 
 - (CGFloat)thumbWidth {
-    if (self._thumbWidth != CGFLOAT_MAX) {
-        return self._thumbWidth;
+    if (_thumbWidth != CGFLOAT_MAX) {
+        return _thumbWidth;
     }
     return self.thumbImage.size.height;
 }
 
-- (void)setThumbWidth:(CGFloat)thumbWidth {
-    self._thumbWidth = thumbWidth;
-}
-
 - (ORKCircleViewTrackLayerSetting *)setting {
-    _setting = [[ORKCircleViewTrackLayerSetting alloc] initWithStartAngle:self.startAngle
+    return [[ORKCircleViewTrackLayerSetting alloc] initWithStartAngle:self.startAngle
                                                                  barWidth:self.barWidth
                                                                  barColor:self.barColor
                                                             trackingColor:self.trackingColor];
-    return _setting;
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
@@ -271,7 +259,7 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
     }
     if ([options objectForKey:ORKCircleViewSliderMinValueKey]) {
         self.minValue = [options[ORKCircleViewSliderMinValueKey] doubleValue];
-        self._value = self.minValue;
+        self.value = self.minValue;
     }
     if ([options objectForKey:ORKCircleViewSliderSliderEnabledKey]) {
         self.sliderEnabled = [options[ORKCircleViewSliderSliderEnabledKey] boolValue];

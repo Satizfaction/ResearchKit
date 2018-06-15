@@ -56,6 +56,7 @@ NSInteger countOfAttempts = 2;
     NSInteger score;
     NSInteger attempts;
     NSInteger currentStep;
+    BOOL isFirstAttemptCorrect;
     dispatch_block_t dispatchBlock;
 }
 
@@ -100,6 +101,7 @@ NSInteger countOfAttempts = 2;
     currentStep = 0;
     attempts = 1;
     score = 0;
+    isFirstAttemptCorrect = NO;
     
     _visualAcuityView.buttonItem = [ORKBorderedButton new];
     [_visualAcuityView.buttonItem setTitle:ORKLocalizedString(@"BUTTON_NEXT", nil) forState:UIControlStateNormal];
@@ -110,15 +112,17 @@ NSInteger countOfAttempts = 2;
 
 - (void)goNext {
     BOOL result = [self calculateResult];
-    if (!result && attempts == countOfAttempts) {
+    if (!result && !isFirstAttemptCorrect && attempts == countOfAttempts) {
         [self goForward];
         return;
     }
    
-    if (result && attempts == countOfAttempts) {
+    if ((result || isFirstAttemptCorrect) && attempts == countOfAttempts) {
         currentStep += 1;
         attempts = 1;
+        isFirstAttemptCorrect = NO;
     } else {
+        isFirstAttemptCorrect = result;
         attempts += 1;
     }
     
