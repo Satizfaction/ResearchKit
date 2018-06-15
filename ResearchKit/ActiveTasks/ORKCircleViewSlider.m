@@ -163,9 +163,9 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
 
 - (ORKCircleViewTrackLayerSetting *)setting {
     return [[ORKCircleViewTrackLayerSetting alloc] initWithStartAngle:self.startAngle
-                                                                 barWidth:self.barWidth
-                                                                 barColor:self.barColor
-                                                            trackingColor:self.trackingColor];
+                                                             barWidth:self.barWidth
+                                                             barColor:self.barColor
+                                                        trackingColor:self.trackingColor];
 }
 
 - (void)layoutSublayersOfLayer:(CALayer *)layer {
