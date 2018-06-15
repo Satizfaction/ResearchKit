@@ -61,5 +61,5 @@ ORK_EXTERN NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey;
 @property (nonatomic) CGFloat value;
 
 - (instancetype)initWithFrame:(CGRect)frame options:(NSDictionary*)options;
-
+- (void)updateUI;
 @end

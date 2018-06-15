@@ -134,7 +134,7 @@ CGFloat labelMargin = 30.0;
     
     if (!CGRectEqualToRect(self.slider.frame, self.bounds)) {
         self.slider.frame = self.bounds;
-        [self.slider setNeedsLayout];
+        [self.slider updateUI];
     }
 
     CGRect frame = [self contentFrame];

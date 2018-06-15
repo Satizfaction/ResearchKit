@@ -219,12 +219,10 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
 
 - (void)changeOptions:(NSDictionary *)options {
     [self buildWithOptions:options];
-    [self setNeedsLayout];
+    [self updateUI];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
+- (void)updateUI {
     if (self.trackLayer != nil) {
         [self.trackLayer removeFromSuperlayer];
     }
