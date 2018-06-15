@@ -133,6 +133,20 @@
                                                         attribute:NSLayoutAttributeTop
                                                        multiplier:1.0
                                                          constant:0.0]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:_sliderView
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                           toItem:_contentView
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0
+                                                         constant:0.0]];
+    [constraints addObject:[NSLayoutConstraint constraintWithItem:_sliderView
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationGreaterThanOrEqual
+                                                           toItem:_contentView
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0
+                                                         constant:0.0]];
     
     [constraints addObject:[NSLayoutConstraint constraintWithItem:_sliderView
                                                         attribute:NSLayoutAttributeCenterX

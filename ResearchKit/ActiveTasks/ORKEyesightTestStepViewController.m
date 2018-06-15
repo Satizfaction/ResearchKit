@@ -83,7 +83,6 @@ NSInteger countOfAttempts = 2;
     _visualAcuityView.translatesAutoresizingMaskIntoConstraints = NO;
     self.activeStepView.activeCustomView = _visualAcuityView;
     self.activeStepView.stepViewFillsAvailableSpace = YES;
-    [self.activeStepView setScrollEnabled:NO];
     
     NSString *title = [self eyesightTestStep].eye == ORKEyesightTestEyeRight ? ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_RIGHT_EYE", nil) : ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_LEFT_EYE", nil);
     NSString *message = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_INFO_TEXT", nil);
