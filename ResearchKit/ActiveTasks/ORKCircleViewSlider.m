@@ -186,24 +186,20 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
 }
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(nullable UIEvent *)event {
-    UIView *superView = self.superview;
-    while (superView) {
-        if ([superView isKindOfClass:[UIScrollView class]]) {
-            UIScrollView *scrollView = (UIScrollView *)superView;
-            [scrollView setScrollEnabled:NO];
-            break;
-        }
-        superView = superView.superview;
-    }
+    [self setSuperviewScrollEnabled:NO];
     return YES;
 }
 
 - (void)endTrackingWithTouch:(nullable UITouch *)touch withEvent:(nullable UIEvent *)event {
+    [self setSuperviewScrollEnabled:YES];
+}
+
+- (void)setSuperviewScrollEnabled:(BOOL)enabled {
     UIView *superView = self.superview;
     while (superView) {
         if ([superView isKindOfClass:[UIScrollView class]]) {
             UIScrollView *scrollView = (UIScrollView *)superView;
-            [scrollView setScrollEnabled:YES];
+            [scrollView setScrollEnabled:enabled];
             break;
         }
         superView = superView.superview;
