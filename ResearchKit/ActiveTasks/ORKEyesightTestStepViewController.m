@@ -84,6 +84,11 @@ NSInteger countOfAttempts = 2;
     self.activeStepView.activeCustomView = _visualAcuityView;
     self.activeStepView.stepViewFillsAvailableSpace = YES;
     
+    // We need to disable tap/swipe Off gesture recognizers due to conflicts with slider
+    for (UIGestureRecognizer *recognizer in self.activeStepView.gestureRecognizers) {
+        [recognizer setEnabled:NO];
+    }
+    
     NSString *title = [self eyesightTestStep].eye == ORKEyesightTestEyeRight ? ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_RIGHT_EYE", nil) : ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_LEFT_EYE", nil);
     NSString *message = ORKLocalizedString(@"EYESIGHT_TEST_ACUITY_TASK_SLIDER_INFO_TEXT", nil);
     [self.activeStepView updateTitle:title text:message];

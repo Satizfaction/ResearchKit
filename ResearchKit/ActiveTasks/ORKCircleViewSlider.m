@@ -185,6 +185,31 @@ NSString *const ORKCircleViewSliderMinMaxSwitchTresholdKey = @"ORKCircleViewSlid
     return self.sliderEnabled ? self : nil;
 }
 
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(nullable UIEvent *)event {
+    UIView *superView = self.superview;
+    while (superView) {
+        if ([superView isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scrollView = (UIScrollView *)superView;
+            [scrollView setScrollEnabled:NO];
+            break;
+        }
+        superView = superView.superview;
+    }
+    return YES;
+}
+
+- (void)endTrackingWithTouch:(nullable UITouch *)touch withEvent:(nullable UIEvent *)event {
+    UIView *superView = self.superview;
+    while (superView) {
+        if ([superView isKindOfClass:[UIScrollView class]]) {
+            UIScrollView *scrollView = (UIScrollView *)superView;
+            [scrollView setScrollEnabled:YES];
+            break;
+        }
+        superView = superView.superview;
+    }
+}
+
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event {
     CGFloat degree = [ORKCircleViewMath pointPairToBearingDegreesWithStartPoint:self.center endPoint:[touch locationInView:self]];
     self.latestDegree = degree;
