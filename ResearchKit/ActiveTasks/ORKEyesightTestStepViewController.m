@@ -129,7 +129,6 @@ NSInteger countOfAttempts = 2;
         isFirstAttemptCorrect = result;
         attempts += 1;
     }
-    
     [self changeAcuity];
 }
 
@@ -181,17 +180,14 @@ NSInteger countOfAttempts = 2;
 }
 
 - (ORKStepResult *)result {
-    
     ORKStepResult *parentResult = [super result];
     
-    // TODO: populate result
     ORKEyesightTestResult *eyesightTestResult = [[ORKEyesightTestResult alloc] init];
     eyesightTestResult.identifier = self.eyesightTestStep.identifier;
     eyesightTestResult.mode = [self eyesightTestStep].mode;
     eyesightTestResult.eye = [self eyesightTestStep].eye;
     eyesightTestResult.score = [self eyesightTestStep].score;
     parentResult.results = @[eyesightTestResult];
-    
     return parentResult;
 }
 

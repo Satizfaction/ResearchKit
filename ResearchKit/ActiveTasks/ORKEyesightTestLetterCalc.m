@@ -39,8 +39,6 @@ CGFloat pixelPerInchIphone = 326;
 
 CGFloat inchPerMm = 25.4;
 
-CGFloat renderedPixels = 1.15;
-
 @interface ORKEyesightTestScreenCalc : NSObject
 
 @end
